@@ -1,33 +1,72 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import Inicio from './Incio';
+import Pelicula from './Pelicula';
+import { BrowserRouter, Routes, Route, Link} from "react-router-dom";
+import React, { useState } from 'react';
+import { NavLink as RRNavLink } from 'react-router-dom';
+import Pie from './Pie';
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink,
+} from 'reactstrap';
 
-function App() {
-  const [count, setCount] = useState(0)
+function MenuNabar(props) {
+
+  const [isOpen, setIsOpen] = useState(false);
+  
+    const toggle = () => setIsOpen(!isOpen);
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="body-nav">
+
+        <Navbar className="color-nav" light expand="md">
+          <NavbarBrand className='blanco' tag={Link} to="/"><h2>Principal</h2></NavbarBrand>
+          <NavbarToggler onClick={toggle} />
+            <Collapse isOpen={isOpen} navbar>
+            <Nav className="me-auto" navbar>
+              <NavItem>
+                <NavLink tag={RRNavLink} to="/Oferta" className="nav-link blanco" activeClassName="active"> <h4>Peliculas</h4> </NavLink>
+
+              </NavItem>
+            </Nav>
+            </Collapse>
+      </Navbar>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+    </>
+    
+  );
+}
+function App() {
+
+  return (
+    <>
+      <div className="all">
+        <div>
+
+        <header >
+          <div className="centro">
+            <h1 className='titulo1'>Cinemateca</h1> 
+            <h1 className='titulo2' >BOLIVIANA</h1>
+          </div>
+        </header>
+        <nav>
+          <MenuNabar></MenuNabar>
+        </nav>
+        </div>
+        <section>
+          <Routes>
+            <Route path='/' element={<Inicio></Inicio>} ></Route>
+            <Route path='/Oferta' element={<Pelicula></Pelicula>} ></Route>
+          </Routes>
+        </section>
+        <Pie></Pie>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
